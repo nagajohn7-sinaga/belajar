@@ -1,13 +1,320 @@
-selamat datang di website nagajohn
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Kelas Bu Sari</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kuis Permutasi dan Kombinasi</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#eef2ff;
+  color:#1e293b;
+}
+header{
+  background:linear-gradient(135deg,#312e81,#6366f1);
+  color:white;
+  padding:30px 15px;
+  text-align:center;
+}
+header h1{margin:0 0 10px;font-size:27px}
+.container{max-width:850px;margin:25px auto;padding:15px}
+.card{
+  background:white;
+  border-radius:15px;
+  padding:23px;
+  margin-bottom:20px;
+  box-shadow:0 5px 18px #0001;
+}
+.info{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px;
+  background:#e0e7ff;
+  padding:15px;
+  border-radius:10px;
+  font-weight:bold;
+}
+.timer{color:#dc2626}
+.question{
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  padding:18px;
+  margin:18px 0;
+}
+.question p{font-weight:bold;line-height:1.6}
+.option{
+  display:block;
+  padding:11px;
+  margin:8px 0;
+  background:#f8fafc;
+  border-radius:8px;
+  cursor:pointer;
+}
+.option:hover{background:#e0e7ff}
+.option input{margin-right:8px}
+button{
+  border:0;
+  padding:13px 22px;
+  border-radius:9px;
+  font-weight:bold;
+  cursor:pointer;
+  margin:5px;
+}
+.primary{background:#4f46e5;color:white}
+.secondary{background:#e2e8f0;color:#334155}
+button:hover{opacity:.85}
+#result{display:none;text-align:center}
+.score{font-size:48px;color:#4f46e5;font-weight:bold}
+.explanation{
+  text-align:left;
+  background:#f8fafc;
+  padding:15px;
+  border-radius:10px;
+  margin:12px 0;
+  line-height:1.7;
+}
+.correct{color:#15803d}
+.wrong{color:#dc2626}
+footer{text-align:center;padding:20px;color:#64748b}
+</style>
 </head>
+
 <body>
-  <h1>Selamat datang!</h1>
-  <p>Website kelas Matematika.</p>
+
+<header>
+<h1>🎓 KUIS MATEMATIKA KELAS XII</h1>
+<p>Materi: Permutasi dan Kombinasi</p>
+<p>Uji Kemampuanmu dan Raih Nilai Terbaik!</p>
+</header>
+
+<div class="container">
+
+<div class="card" id="intro">
+<h2>Selamat Datang, Peserta Didik!</h2>
+<p>Silakan isi identitas sebelum memulai kuis.</p>
+<label>Nama siswa:</label>
+<input id="nama" type="text" placeholder="Masukkan nama..."
+style="width:100%;padding:12px;margin:10px 0;border:1px solid #ccc;border-radius:8px">
+<label>Kelas:</label>
+<input id="kelas" type="text" placeholder="Contoh: XII IPA 1"
+style="width:100%;padding:12px;margin:10px 0;border:1px solid #ccc;border-radius:8px">
+
+<h3>Petunjuk Pengerjaan</h3>
+<ul>
+<li>Jumlah soal: 10 pilihan ganda.</li>
+<li>Waktu pengerjaan: 15 menit.</li>
+<li>Pilih satu jawaban yang paling tepat.</li>
+<li>Setiap jawaban benar mendapat 10 poin.</li>
+<li>Nilai maksimal adalah 100.</li>
+</ul>
+<button class="primary" onclick="mulai()">MULAI KUIS</button>
+</div>
+
+<div class="card" id="quiz" style="display:none">
+<div class="info">
+<span id="student"></span>
+<span>Soal: 10</span>
+<span class="timer">⏱ <span id="time">15:00</span></span>
+</div>
+
+<form id="quizForm">
+
+<div class="question">
+<p>1. Lima buku berbeda akan disusun berjajar di atas meja. Banyak susunan yang mungkin adalah ...</p>
+<label class="option"><input type="radio" name="q1" value="a"> A. 25</label>
+<label class="option"><input type="radio" name="q1" value="b"> B. 60</label>
+<label class="option"><input type="radio" name="q1" value="c"> C. 120</label>
+<label class="option"><input type="radio" name="q1" value="d"> D. 240</label>
+</div>
+
+<div class="question">
+<p>2. Dari 8 siswa akan dipilih 3 siswa sebagai anggota tim. Banyak cara pemilihannya adalah ...</p>
+<label class="option"><input type="radio" name="q2" value="a"> A. 24</label>
+<label class="option"><input type="radio" name="q2" value="b"> B. 56</label>
+<label class="option"><input type="radio" name="q2" value="c"> C. 112</label>
+<label class="option"><input type="radio" name="q2" value="d"> D. 336</label>
+</div>
+
+<div class="question">
+<p>3. Enam orang akan duduk berjajar pada enam kursi. Banyak susunan tempat duduk adalah ...</p>
+<label class="option"><input type="radio" name="q3" value="a"> A. 36</label>
+<label class="option"><input type="radio" name="q3" value="b"> B. 120</label>
+<label class="option"><input type="radio" name="q3" value="c"> C. 360</label>
+<label class="option"><input type="radio" name="q3" value="d"> D. 720</label>
+</div>
+
+<div class="question">
+<p>4. Dari 7 peserta lomba akan dipilih juara pertama dan kedua. Banyak susunan juara yang mungkin adalah ...</p>
+<label class="option"><input type="radio" name="q4" value="a"> A. 21</label>
+<label class="option"><input type="radio" name="q4" value="b"> B. 35</label>
+<label class="option"><input type="radio" name="q4" value="c"> C. 42</label>
+<label class="option"><input type="radio" name="q4" value="d"> D. 49</label>
+</div>
+
+<div class="question">
+<p>5. Banyak cara memilih 4 orang dari 10 orang untuk menjadi anggota kelompok adalah ...</p>
+<label class="option"><input type="radio" name="q5" value="a"> A. 120</label>
+<label class="option"><input type="radio" name="q5" value="b"> B. 210</label>
+<label class="option"><input type="radio" name="q5" value="c"> C. 240</label>
+<label class="option"><input type="radio" name="q5" value="d"> D. 5040</label>
+</div>
+
+<div class="question">
+<p>6. Banyak bilangan 4 angka berbeda yang dapat dibentuk dari angka 1, 2, 3, 4, dan 5 adalah ...</p>
+<label class="option"><input type="radio" name="q6" value="a"> A. 20</label>
+<label class="option"><input type="radio" name="q6" value="b"> B. 60</label>
+<label class="option"><input type="radio" name="q6" value="c"> C. 120</label>
+<label class="option"><input type="radio" name="q6" value="d"> D. 625</label>
+</div>
+
+<div class="question">
+<p>7. Dari 10 orang akan dipilih 2 orang sebagai perwakilan tanpa membedakan jabatan. Banyak cara pemilihannya adalah ...</p>
+<label class="option"><input type="radio" name="q7" value="a"> A. 20</label>
+<label class="option"><input type="radio" name="q7" value="b"> B. 45</label>
+<label class="option"><input type="radio" name="q7" value="c"> C. 90</label>
+<label class="option"><input type="radio" name="q7" value="d"> D. 100</label>
+</div>
+
+<div class="question">
+<p>8. Banyak susunan huruf berbeda yang dapat dibentuk dari kata MATA adalah ...</p>
+<label class="option"><input type="radio" name="q8" value="a"> A. 6</label>
+<label class="option"><input type="radio" name="q8" value="b"> B. 8</label>
+<label class="option"><input type="radio" name="q8" value="c"> C. 12</label>
+<label class="option"><input type="radio" name="q8" value="d"> D. 24</label>
+</div>
+
+<div class="question">
+<p>9. Dalam perlombaan lari yang diikuti 8 peserta, akan ditentukan juara 1, 2, dan 3. Banyak kemungkinan susunan juara adalah ...</p>
+<label class="option"><input type="radio" name="q9" value="a"> A. 56</label>
+<label class="option"><input type="radio" name="q9" value="b"> B. 112</label>
+<label class="option"><input type="radio" name="q9" value="c"> C. 336</label>
+<label class="option"><input type="radio" name="q9" value="d"> D. 512</label>
+</div>
+
+<div class="question">
+<p>10. Dari 6 siswa akan dipilih seorang ketua dan seorang wakil ketua. Banyak cara pemilihannya adalah ...</p>
+<label class="option"><input type="radio" name="q10" value="a"> A. 12</label>
+<label class="option"><input type="radio" name="q10" value="b"> B. 15</label>
+<label class="option"><input type="radio" name="q10" value="c"> C. 30</label>
+<label class="option"><input type="radio" name="q10" value="d"> D. 36</label>
+</div>
+
+<button type="button" class="primary" onclick="selesai(false)">
+KUMPULKAN JAWABAN
+</button>
+</form>
+</div>
+
+<div class="card" id="result">
+<h2>HASIL KUIS</h2>
+<p id="namaHasil"></p>
+<div class="score" id="score"></div>
+<h3 id="predikat"></h3>
+<p id="detail"></p>
+<hr>
+<h3>Pembahasan Jawaban</h3>
+<div id="pembahasan"></div>
+<button class="primary" onclick="ulang()">ULANGI KUIS</button>
+<button class="secondary" onclick="window.print()">CETAK HASIL</button>
+</div>
+
+</div>
+
+<footer>
+<p>Media Pembelajaran Matematika Kelas XII</p>
+<p>Guru Hebat, Siswa Berprestasi!</p>
+</footer>
+
+<script>
+let sisa=900;
+let interval;
+let sudahSelesai=false;
+
+const kunci={
+q1:"c",q2:"b",q3:"d",q4:"c",q5:"b",
+q6:"c",q7:"b",q8:"c",q9:"c",q10:"c"
+};
+
+const bahas=[
+"5! = 5 × 4 × 3 × 2 × 1 = 120. Urutan buku diperhatikan, sehingga menggunakan permutasi.",
+"C(8,3) = 8!/(3! × 5!) = 56. Urutan anggota tim tidak diperhatikan.",
+"6! = 720. Setiap orang menempati posisi yang berbeda.",
+"7 × 6 = 42. Juara pertama dan kedua memiliki urutan atau jabatan berbeda.",
+"C(10,4) = 10!/(4! × 6!) = 210. Urutan anggota kelompok tidak diperhatikan.",
+"5 × 4 × 3 × 2 = 120. Empat angka dipilih dan disusun tanpa pengulangan.",
+"C(10,2) = 10!/(2! × 8!) = 45. Kedua perwakilan tidak memiliki jabatan berbeda.",
+"4!/2! = 12. Huruf A muncul dua kali sehingga susunan dibagi 2!.",
+"8 × 7 × 6 = 336. Urutan juara pertama, kedua, dan ketiga diperhatikan.",
+"6 × 5 = 30. Ketua dan wakil ketua memiliki jabatan berbeda."
+];
+
+function mulai(){
+ let nama=document.getElementById("nama").value.trim();
+ let kelas=document.getElementById("kelas").value.trim();
+ if(!nama || !kelas){
+   alert("Silakan isi nama dan kelas terlebih dahulu!");
+   return;
+ }
+ document.getElementById("intro").style.display="none";
+ document.getElementById("quiz").style.display="block";
+ document.getElementById("student").innerText=nama+" | "+kelas;
+ interval=setInterval(hitung,1000);
+}
+
+function hitung(){
+ sisa--;
+ let m=Math.floor(sisa/60);
+ let d=sisa%60;
+ document.getElementById("time").innerText=
+ String(m).padStart(2,"0")+":"+String(d).padStart(2,"0");
+ if(sisa<=0){
+   selesai(true);
+ }
+}
+
+function selesai(waktuHabis){
+ if(sudahSelesai)return;
+ sudahSelesai=true;
+ clearInterval(interval);
+
+ let benar=0;
+ let isi="";
+ for(let i=1;i<=10;i++){
+   let j=document.querySelector('input[name="q'+i+'"]:checked');
+   let jawaban=j?j.value:"";
+   if(jawaban===kunci["q"+i])benar++;
+   let status=jawaban===kunci["q"+i]?"Benar":"Belum tepat";
+   isi+=`<div class="explanation">
+   <b>Soal ${i} - <span class="${jawaban===kunci["q"+i]?'correct':'wrong'}">${status}</span></b><br>
+   Kunci jawaban: ${kunci["q"+i].toUpperCase()}<br>
+   ${bahas[i-1]}
+   </div>`;
+ }
+
+ let skor=benar*10;
+ document.getElementById("quiz").style.display="none";
+ document.getElementById("result").style.display="block";
+ document.getElementById("namaHasil").innerText=
+ "Nama: "+document.getElementById("nama").value+
+ " | Kelas: "+document.getElementById("kelas").value;
+ document.getElementById("score").innerText=skor;
+ document.getElementById("detail").innerText=
+ "Jawaban benar: "+benar+" dari 10 soal.";
+ document.getElementById("predikat").innerText=
+ skor>=90?"Sangat Baik!":skor>=75?"Baik!":
+ skor>=60?"Cukup, terus belajar!":"Jangan menyerah, ayo belajar lagi!";
+ document.getElementById("pembahasan").innerHTML=isi;
+ if(waktuHabis)alert("Waktu habis! Jawaban dikumpulkan otomatis.");
+}
+
+function ulang(){
+ location.reload();
+}
+</script>
+
 </body>
 </html>
